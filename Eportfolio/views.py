@@ -14,7 +14,7 @@ def index(request):
     return render(request,"landing.html")
  
  
-@login_required  # login redirect don't forget
+@login_required  
 def demographicForm(request):
     if request.method == "POST":
         studentNumber = request.POST['studentNumber']
