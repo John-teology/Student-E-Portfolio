@@ -7,10 +7,11 @@
     <title>Home</title>
   </head>
   <body>
-    <h1>Welcome {{request.user}}</h1>
+    <h1>Welcome {{studentprof.firstName}}</h1>
     <form method="post" action="/accounts/logout/" style="margin-top: 10px">
       {% csrf_token %}
       <button class="btn btn-dark" type="submit">Sign Out</button>
     </form>
+
   </body>
 </html>

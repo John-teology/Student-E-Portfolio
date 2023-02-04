@@ -16,6 +16,10 @@ def index(request):
  
 @login_required  
 def demographicForm(request):
+    userid = User.objects.get(username = request.user)
+    if (Studentprofile.objects.filter(userID = userid).count() > 0):
+        studentN = Studentprofile.objects.get(userID=userid)
+        return HttpResponseRedirect(reverse('studentProfile',args=(studentN.studentNumber,)))
     if request.method == "POST":
         studentNumber = request.POST['studentNumber']
         first = request.POST['firstName']
@@ -34,7 +38,7 @@ def demographicForm(request):
         studentProfile = Studentprofile(userID = request.user, studentNumber = studentNumber, lastName = last, firstName = first, courseID = courseInstance, yearID = yearInstance, genderID = genderInstance, contactNumber = phoneNumber, emailAddress = email, guardianNumber = guardian)
         
         studentProfile.save()
-        return HttpResponseRedirect(reverse("home"))
+        return HttpResponseRedirect(reverse("studentProfile",args=(str(studentNumber),)))
         
     return render(request,"studentForm.html",{
         'courses': Course.objects.all(),
@@ -44,6 +48,9 @@ def demographicForm(request):
     
     
 
-def mainpage(request):
-    return render(request,"home.html")
+def studentProfile(request,studentID):
+    studentprof = Studentprofile.objects.get(studentNumber = studentID)
+    return render(request,"studentProfile.html",{
+        'studentprof' : studentprof
+    })
     
