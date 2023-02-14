@@ -14,12 +14,12 @@ def index(request):
     return render(request,"landing.html")
  
  
-@login_required  
+# @login_required  
 def demographicForm(request):
-    userid = User.objects.get(username = request.user)
-    if (Studentprofile.objects.filter(userID = userid).count() > 0):
-        studentN = Studentprofile.objects.get(userID=userid)
-        return HttpResponseRedirect(reverse('studentProfile',args=(studentN.studentNumber,)))
+    # userid = User.objects.get(username = request.user)
+    # if (Studentprofile.objects.filter(userID = userid).count() > 0):
+    #     studentN = Studentprofile.objects.get(userID=userid)
+    #     return HttpResponseRedirect(reverse('studentProfile',args=(studentN.studentNumber,)))
     if request.method == "POST":
         studentNumber = request.POST['studentNumber']
         first = request.POST['firstName']
@@ -54,3 +54,6 @@ def studentProfile(request,studentID):
         'studentprof' : studentprof
     })
     
+    
+def adminSite(request):
+    return render(request, 'admin.html')

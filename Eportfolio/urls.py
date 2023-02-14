@@ -7,6 +7,8 @@ from . import views
 urlpatterns = [
     path("",views.index, name="index"),
     path("studentform/",views.demographicForm, name="demographicForm"),
-    path("studentprofile/<str:studentID>",views.studentProfile,name="studentProfile")
+    path("studentprofile/<str:studentID>",views.studentProfile,name="studentProfile"),
+    path("siteadmin",views.adminSite,name="adminsite")
+    
     
 ]
