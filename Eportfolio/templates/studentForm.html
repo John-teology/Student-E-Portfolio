@@ -5,60 +5,114 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="\static/eportfolio/style.css" />
     <title>Form</title>
   </head>
   <body>
-    <h1>Demographic profile</h1>
 
-    <form method="post" action="/accounts/logout/" style="margin-top: 10px">
-      {% csrf_token %}
-      <button class="btn btn-dark" type="submit">Sign Out</button>
-    </form>
-    <br />
-    <br />
-    <br />
-    <br />
-    <form action="" method="post">
-      {% csrf_token %}
-      <input
-        type="text"
-        name="studentNumber"
-        placeholder="Your Student Number"
-      />
-      <input type="text" name="firstName" placeholder="Your FirstName" />
-      <input type="text" name="lastName" placeholder="Your LastName" />
-      <select name="course" id="">
-        <option value="" disabled selected>Select your Course</option>
-        {% for course in courses %}
-        <option value="{{course.id}}">{{course}}</option>
-        {% endfor %}
-      </select>
-      <select name="yearlevel" id="">
-        <option value="" disabled selected>Select your Year Level</option>
-        {% for year in yearLevels %}
-        <option value="{{year.id}}">{{year}}</option>
-        {% endfor %}
-      </select>
-      <select name="gender" id="">
-        <option value="" disabled selected>Select your Gender</option>
-        {% for g in gender %}
-        <option value="{{g.id}}">{{g}}</option>
-        {% endfor %}
-      </select>
-      <input type="number" name="phoneNumber" placeholder="Your Phone Number" />
-      <input
-        type="email"
-        name="email"
-        value="{{request.user.email}}"
-        disabled
-      />
-      <input
-        type="number"
-        name="guardian"
-        placeholder="Emergency Contant Number"
-      />
+    
+    <div class="formHeader">
+      <form method="post" action="/accounts/logout/" style="margin-top: 10px">
+        {% csrf_token %}
+        <button class="btn btn-dark" type="submit">Sign Out</button>
+      </form>
+    </div>
 
-      <input type="submit" value="Submit" />
-    </form>
+    <div class="bg">
+      <h1>Demographic profile</h1>
+
+      <div class="form">
+        <form action="" method="post">
+          {% csrf_token %}
+          
+          <table style="width:100%">
+            <tr>
+              <th>
+                <div class="txt_box">
+                  <input type="text" name="studentNumber" placeholder="Your Student Number" />
+                </div>
+              </th>
+              <th>
+                <div class="txt_box">
+                  <input type="text" name="firstName" placeholder="Your FirstName" />
+                </div>
+              </th>
+              <th>
+                <div class="txt_box">
+                  <input type="text" name="lastName" placeholder="Your LastName" />
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <div class="txt_box">
+                  <select name="course" id="">
+                    <option value="" disabled selected>Select your Course</option>
+                    {% for course in courses %}
+                    <option value="{{course.id}}">{{course}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </th>
+              <th>
+                <div class="txt_box">
+                  <select name="yearlevel" id="">
+                    <option value="" disabled selected>Select your Year Level</option>
+                    {% for year in yearLevels %}
+                    <option value="{{year.id}}">{{year}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </th>
+              <th>
+                <div class="txt_box">
+                  <select name="gender" id="">
+                    <option value="" disabled selected>Select your Gender</option>
+                    {% for g in gender %}
+                    <option value="{{g.id}}">{{g}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <th>
+              <div class="txt_box">
+                <input type="text" name="phoneNumber" placeholder="Your Phone Number" />
+              </div>
+              </th>
+              <th>
+                <div class="txt_box">
+                  <input type="email" name="email" value="{{request.user.email}}" disabled />
+                </div>
+              </th>
+              <th>
+              <div class="txt_box">
+                <input type="text" name="guardian" placeholder="Emergency Contant Number" />
+              </div>
+              </th>
+            </tr>
+          </table>
+          
+          <style>
+            input[type="submit"]{
+              width: 20%;
+              height: 40px;
+              border: 1px solid;
+              background: #191970;
+              margin: 40px 0 10px 79%;
+              border-radius: 2px;
+              font-size: 15px;
+              color: white;
+              font-weight: bold;
+              cursor: pointer;
+              outline: none;
+            }
+        </style>
+          <br><input type="submit" value="Submit" />
+        
+        </form>
+      </div>
+    </div>
   </body>
 </html>

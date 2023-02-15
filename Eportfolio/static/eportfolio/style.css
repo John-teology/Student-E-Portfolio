@@ -12,6 +12,23 @@ body{
   height: 100vh;
   overflow: hidden;
 }
+button[type="submit"]{
+  width: 10%;
+  height: 40px;
+  border: 1px solid;
+  background: #F0FFFF;
+  margin: 10px 0 0px 88%;
+  border-radius: 2px;
+  font-size: 15px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+}
+button[type="submit"]:hover{
+  background: #306EFF;
+  transition: .5s;
+}
 .center{
   position: absolute;
   top: 20%;
@@ -40,8 +57,8 @@ form .txt_field{
   padding: 0 5px;
   height: 40px;
   font-size: 15px;
-  background: white;
-  border-color: white;
+  background: #fff;
+  border-color: #fff;
   outline: none;
 }
 .txt_field label{
@@ -63,7 +80,6 @@ form .txt_field{
 .txt_field input:valid ~ span::before{
   width: 100%;
 }
-
 input[type="submit"]{
   width: 50%;
   height: 40px;
@@ -72,7 +88,7 @@ input[type="submit"]{
   margin: 40px 0 10px 85px;
   border-radius: 2px;
   font-size: 15px;
-  color: white;
+  color: #fff;
   font-weight: bold;
   cursor: pointer;
   outline: none;
@@ -80,4 +96,44 @@ input[type="submit"]{
 input[type="submit"]:hover{
   background: #56A5EC;
   transition: .5s;
+}
+
+.bg{
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  background: #F0FFFF;
+  border-radius: 25px;
+  box-shadow: 10px 15px 25px #0C090A;
+}
+.bg h1{
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+.form{
+  padding: 20px;
+}
+form .txt_box{
+  position: relative;
+  margin: 10px;
+}
+.txt_box input{
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 15px;
+  background: #fff;
+  border: 1px solid #666362;
+  outline: none;
+}
+form select{
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 15px;
+  background: #fff;
+  border: 1px solid #666362;
+  outline: none;
 }
