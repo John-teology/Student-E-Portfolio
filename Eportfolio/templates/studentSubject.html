@@ -11,5 +11,9 @@
     <h1>Subject Name: {{subject.subjectName}}</h1>
     <h1>Subject Faculty: {{subject.facultyName}}</h1>
     <h1>No. of Units: {{subject.units}}</h1>
+
+    <button>
+      <a href="{% url 'studentProfile' studentID=sNumber %}">back</a>
+    </button>
   </body>
 </html>

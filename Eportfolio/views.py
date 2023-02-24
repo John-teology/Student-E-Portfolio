@@ -75,7 +75,8 @@ def studentSubject(request,studentID,subjectCode):
     profile = Studentprofile.objects.get(studentNumber = studentID)
     subject = Subject.objects.get(studentProfileID=profile,subjectCode=subjectCode)
     return render(request,'studentSubject.html',{
-        'subject': subject
+        'subject': subject,
+        'sNumber': studentID
     })
     
     
