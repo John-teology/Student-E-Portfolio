@@ -24,7 +24,12 @@
 
     <h1>List of Subjects</h1>
     {% for sub in subjects %}
-    <li>{{sub.subjectName}}</li>
+    <li>
+      <a
+        href="{% url 'studentSubject' studentID=studentprof.studentNumber subjectCode=sub.subjectCode   %}"
+        >{{sub.subjectName}}</a
+      >
+    </li>
     {% endfor %}
 
     <form method="post" action="/accounts/logout/" style="margin-top: 10px">
