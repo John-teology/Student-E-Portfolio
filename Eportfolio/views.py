@@ -9,33 +9,34 @@ from .models import *
 
 
 def index(request):
-    # if request.user.is_authenticated:
-    #     return HttpResponseRedirect(reverse('profileForm'))
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('profileForm'))
     return render(request,"landing.html")
  
  
 # @login_required  
 def demographicForm(request):
-    # userid = User.objects.get(username = request.user)
-    # if (Studentprofile.objects.filter(userID = userid).count() > 0):
-    #     studentN = Studentprofile.objects.get(userID=userid)
-    #     return HttpResponseRedirect(reverse('studentProfile',args=(studentN.studentNumber,)))
+    userid = User.objects.get(username = request.user)
+    if (Studentprofile.objects.filter(userID = userid).count() > 0):
+        studentN = Studentprofile.objects.get(userID=userid)
+        return HttpResponseRedirect(reverse('studentProfile',args=(studentN.studentNumber,)))
     if request.method == "POST":
         studentNumber = request.POST['studentNumber']
-        first = request.POST['firstName']
-        last = request.POST['lastName']
+        first = request.user.first_name
+        last = request.user.last_name
         course = request.POST['course']
         yearlevel = request.POST['yearlevel']
         gender = request.POST['gender']
         phoneNumber = request.POST['phoneNumber']
         email = request.user.email
-        guardian = request.POST['guardian']
+        guardianNumber = request.POST['guardianNumber']
+        guardianName = request.POST['guardianName']
         
         courseInstance = Course.objects.get(pk = course)
         yearInstance = YearLevel.objects.get(pk = yearlevel)
         genderInstance = Gender.objects.get(pk = gender)
         
-        studentProfile = Studentprofile(userID = request.user, studentNumber = studentNumber, lastName = last, firstName = first, courseID = courseInstance, yearID = yearInstance, genderID = genderInstance, contactNumber = phoneNumber, emailAddress = email, guardianNumber = guardian)
+        studentProfile = Studentprofile(userID = request.user, studentNumber = studentNumber, lastName = last, firstName = first, courseID = courseInstance, yearID = yearInstance, genderID = genderInstance, contactNumber = phoneNumber, emailAddress = email, guardianNumber = guardianNumber, guardianName= guardianName)
         
         studentProfile.save()
         return HttpResponseRedirect(reverse("studentProfile",args=(str(studentNumber),)))
@@ -50,8 +51,23 @@ def demographicForm(request):
 
 def studentProfile(request,studentID):
     studentprof = Studentprofile.objects.get(studentNumber = studentID)
+    subjects = Subject.objects.filter(studentProfileID = studentprof)
+    if request.method == "POST":
+        studentProfileID = studentprof
+        subjectCode = request.POST['SubjectCode']
+        subjectName = request.POST['subjectName']
+        facultyName = request.POST['facultyName']
+        units = request.POST['units']
+    
+        studentSubject = Subject(studentProfileID = studentProfileID,subjectCode = subjectCode,subjectName = subjectName, facultyName= facultyName,units=units)
+        
+        studentSubject.save()
+        studentNumber = studentprof.studentNumber
+        return HttpResponseRedirect(reverse("studentProfile",args=(str(studentNumber),)))
+    
     return render(request,"studentProfile.html",{
-        'studentprof' : studentprof
+        'studentprof' : studentprof,
+        'subjects' : subjects
     })
     
     

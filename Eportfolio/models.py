@@ -30,18 +30,26 @@ class Gender(models.Model):
 class Studentprofile(models.Model):
     userID = models.ForeignKey(User, on_delete=CASCADE, related_name= 'studentProfile' )
     studentNumber = models.CharField(max_length=25, blank=True)
-    lastName = models.CharField(max_length=50)
-    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=100)
     courseID = models.ForeignKey(Course, on_delete=CASCADE ,related_name='studentCourse' )
     yearID = models.ForeignKey(YearLevel, on_delete=CASCADE,  related_name= 'studentYearLevel' )
     genderID = models.ForeignKey(Gender, on_delete=CASCADE,  related_name= 'studentGender' )
     contactNumber = models.IntegerField()
-    emailAddress = models.CharField(max_length=25)
+    emailAddress = models.CharField(max_length=100)
+    guardianName = models.CharField(max_length=70,default="null")
     guardianNumber = models.IntegerField()
     
     
     def __str__(self):
         return f"{self.studentNumber} : {self.lastName}, {self.firstName}"
+    
+class Subject(models.Model):
+    studentProfileID = models.ForeignKey(Studentprofile,on_delete=CASCADE,related_name="studentSubject")
+    subjectCode = models.CharField(max_length=100)
+    subjectName = models.CharField(max_length=100)
+    facultyName = models.CharField(max_length=100)
+    units = models.IntegerField()
     
 
     

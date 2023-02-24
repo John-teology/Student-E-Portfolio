@@ -8,10 +8,28 @@
   </head>
   <body>
     <h1>Welcome {{studentprof.firstName}}</h1>
+    <h1>{{studentprof.lastName}}</h1>
+    <h2>{{studentprof.guardianName}} {{studentprof.guardianNumber}}</h2>
+
+    <h1>Add Subject</h1>
+    <form action="" method="post">
+      {% csrf_token %}
+
+      <input type="text" name="SubjectCode" placeholder="Subject Code" />
+      <input type="text" name="subjectName" placeholder="subject Name" />
+      <input type="text" name="facultyName" placeholder="faculty Name" />
+      <input type="number" name="units" placeholder="No. of Units" />
+      <input type="submit" value="submit" />
+    </form>
+
+    <h1>List of Subjects</h1>
+    {% for sub in subjects %}
+    <li>{{sub.subjectName}}</li>
+    {% endfor %}
+
     <form method="post" action="/accounts/logout/" style="margin-top: 10px">
       {% csrf_token %}
       <button class="btn btn-dark" type="submit">Sign Out</button>
     </form>
-
   </body>
 </html>
