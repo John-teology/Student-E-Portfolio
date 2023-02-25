@@ -51,5 +51,19 @@ class Subject(models.Model):
     facultyName = models.CharField(max_length=100)
     units = models.IntegerField()
     
+    def __str__(self):
+        return f"{self.subjectCode}: {self.subjectName}"
+    
+class Task(models.Model):
+    taskSubject = models.ForeignKey(Subject,on_delete=CASCADE,related_name="subjectTask")
+    title = models.CharField(max_length=100)
+    overallscore = models.IntegerField()
+    score = models.IntegerField()
+    date = models.DateField(blank=True)
+    image = models.ImageField(null = True, blank = True, upload_to = 'images/')
+    
+    def __str__(self):
+        return f"{self.title}"
+    
 
     

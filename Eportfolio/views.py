@@ -10,7 +10,12 @@ from .models import *
 
 def index(request):
     if request.user.is_authenticated:
+        userid = User.objects.get(username = request.user)
+        if (Studentprofile.objects.filter(userID = userid).count() > 0):
+            studentN = Studentprofile.objects.get(userID=userid)
+            return HttpResponseRedirect(reverse('studentProfile',args=(studentN.studentNumber,)))
         return HttpResponseRedirect(reverse('profileForm'))
+        
     return render(request,"landing.html")
  
  
@@ -74,9 +79,21 @@ def studentProfile(request,studentID):
 def studentSubject(request,studentID,subjectCode):
     profile = Studentprofile.objects.get(studentNumber = studentID)
     subject = Subject.objects.get(studentProfileID=profile,subjectCode=subjectCode)
+    studentTask = Task.objects.filter(taskSubject = subject)
+    if request.method == "POST":
+        title = request.POST['title']
+        myScore = request.POST['myScore']
+        totalScore = request.POST['totalScore']
+        date = request.POST['date']
+        image = request.FILES['image']
+        
+        uploadedTask = Task(taskSubject = subject,title = title, overallscore = totalScore,score=myScore,image=image,date=date)
+        uploadedTask.save()
+        return HttpResponseRedirect(reverse("studentSubject",args=(str(profile.studentNumber),str(subject.subjectCode))))
     return render(request,'studentSubject.html',{
         'subject': subject,
-        'sNumber': studentID
+        'sNumber': studentID,
+        'task' :studentTask
     })
     
     

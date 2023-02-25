@@ -7,10 +7,26 @@
     <title>Subject</title>
   </head>
   <body>
-    <h1>Subject Code: {{subject.subjectCode}}</h1>
-    <h1>Subject Name: {{subject.subjectName}}</h1>
-    <h1>Subject Faculty: {{subject.facultyName}}</h1>
-    <h1>No. of Units: {{subject.units}}</h1>
+    <h3>Subject Code: {{subject.subjectCode}}</h3>
+    <h3>Subject Name: {{subject.subjectName}}</h3>
+    <h3>Subject Faculty: {{subject.facultyName}}</h3>
+    <h3>No. of Units: {{subject.units}}</h3>
+    <h1>Task</h1>
+    {% for t in task %} {% if t.image %}
+    <h1>{{t.image.url}}</h1>
+    <img src="{{t.image.url}}" alt="no image" style="height: 100px" />
+    {% endif %} {% endfor %}
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <input type="text" name="title" placeholder="Title" />
+      <input type="number" name="myScore" placeholder="Your Score" />
+      <input type="number" name="totalScore" placeholder="Total Score" />
+
+      <input type="date" name="date" />
+      <input type="file" accept="image/*" name="image" />
+      <input type="submit" value="submit" />
+    </form>
 
     <button>
       <a href="{% url 'studentProfile' studentID=sNumber %}">back</a>
