@@ -57,22 +57,19 @@ def demographicForm(request):
 def studentProfile(request,studentID):
     studentprof = Studentprofile.objects.get(studentNumber = studentID)
     subjects = Subject.objects.filter(studentProfileID = studentprof)
+    availableSubs = Subject.objects.all()
     if request.method == "POST":
-        studentProfileID = studentprof
-        subjectCode = request.POST['SubjectCode']
-        subjectName = request.POST['subjectName']
-        facultyName = request.POST['facultyName']
-        units = request.POST['units']
-    
-        studentSubject = Subject(studentProfileID = studentProfileID,subjectCode = subjectCode,subjectName = subjectName, facultyName= facultyName,units=units)
-        
-        studentSubject.save()
+        subID = request.POST['addSub']
+        sub = Subject.objects.get(pk = subID)
+        sub.studentProfileID = studentprof
+        sub.save()
         studentNumber = studentprof.studentNumber
-        return HttpResponseRedirect(reverse("studentProfile",args=(str(studentNumber),)))
+        return HttpResponseRedirect(reverse("studentProfile",args=(str(studentNumber),)))        
     
     return render(request,"studentProfile.html",{
         'studentprof' : studentprof,
-        'subjects' : subjects
+        'subjects' : subjects,
+        'availSubs' : availableSubs
     })
     
     

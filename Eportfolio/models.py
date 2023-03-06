@@ -14,6 +14,12 @@ class Course(models.Model):
 
     def __str__(self):
         return f"{self.course}"
+    
+class TaskType(models.Model):
+    taskType = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return f"{self.taskType}"
 
 class YearLevel(models.Model):
     yearLevel = models.CharField(max_length=50)
@@ -45,7 +51,7 @@ class Studentprofile(models.Model):
         return f"{self.studentNumber} : {self.lastName}, {self.firstName}"
     
 class Subject(models.Model):
-    studentProfileID = models.ForeignKey(Studentprofile,on_delete=CASCADE,related_name="studentSubject")
+    studentProfileID = models.ForeignKey(Studentprofile,on_delete=CASCADE,related_name="studentSubject", null=True)
     subjectCode = models.CharField(max_length=100)
     subjectName = models.CharField(max_length=100)
     facultyName = models.CharField(max_length=100)
@@ -55,6 +61,7 @@ class Subject(models.Model):
         return f"{self.subjectCode}: {self.subjectName}"
     
 class Task(models.Model):
+    task_Type = models.ForeignKey(TaskType,on_delete=CASCADE, related_name="TypeofTask",null=True)
     taskSubject = models.ForeignKey(Subject,on_delete=CASCADE,related_name="subjectTask")
     title = models.CharField(max_length=100)
     overallscore = models.IntegerField()

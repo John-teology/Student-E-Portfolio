@@ -10,6 +10,7 @@ admin.site.register(Gender)
 admin.site.register(Studentprofile)
 admin.site.register(Subject)
 admin.site.register(Task)
+admin.site.register(TaskType)
 
 
 
