@@ -6,6 +6,8 @@ from . import views
 
 urlpatterns = [
     path("",views.index, name="indexProf"),
+    path("addSub/",views.subject,name="addsubject"),
+    path("subjects/",views.showSubject,name="showsubject")
     
     
 ]

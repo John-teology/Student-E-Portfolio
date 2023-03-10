@@ -14,12 +14,15 @@ def index(request):
         if (Studentprofile.objects.filter(userID = userid).count() > 0):
             studentN = Studentprofile.objects.get(userID=userid)
             return HttpResponseRedirect(reverse('studentProfile',args=(studentN.studentNumber,)))
+        if request.user.username == "jan":
+            return HttpResponseRedirect(reverse('admin'))
+            
         return HttpResponseRedirect(reverse('profileForm'))
         
     return render(request,"landing.html")
  
  
-# @login_required  
+@login_required  
 def demographicForm(request):
     userid = User.objects.get(username = request.user)
     if (Studentprofile.objects.filter(userID = userid).count() > 0):
@@ -77,20 +80,24 @@ def studentSubject(request,studentID,subjectCode):
     profile = Studentprofile.objects.get(studentNumber = studentID)
     subject = Subject.objects.get(studentProfileID=profile,subjectCode=subjectCode)
     studentTask = Task.objects.filter(taskSubject = subject)
+    tasktype = TaskType.objects.all()
     if request.method == "POST":
+        type = request.POST['type']
         title = request.POST['title']
         myScore = request.POST['myScore']
         totalScore = request.POST['totalScore']
         date = request.POST['date']
         image = request.FILES['image']
         
-        uploadedTask = Task(taskSubject = subject,title = title, overallscore = totalScore,score=myScore,image=image,date=date)
+        tType = TaskType.objects.get(pk = type)
+        uploadedTask = Task(task_Type = tType,taskSubject = subject,title = title, overallscore = totalScore,score=myScore,image=image,date=date)
         uploadedTask.save()
         return HttpResponseRedirect(reverse("studentSubject",args=(str(profile.studentNumber),str(subject.subjectCode))))
     return render(request,'studentSubject.html',{
         'subject': subject,
         'sNumber': studentID,
-        'task' :studentTask
+        'task' :studentTask,
+        'types' : tasktype
     })
     
     

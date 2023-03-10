@@ -52,7 +52,7 @@ class Studentprofile(models.Model):
     
 class Subject(models.Model):
     studentProfileID = models.ForeignKey(Studentprofile,on_delete=CASCADE,related_name="studentSubject", null=True)
-    subjectCode = models.CharField(max_length=100)
+    subjectCode = models.CharField(max_length=100,unique=True)
     subjectName = models.CharField(max_length=100)
     facultyName = models.CharField(max_length=100)
     units = models.IntegerField()
@@ -60,6 +60,14 @@ class Subject(models.Model):
     def __str__(self):
         return f"{self.subjectCode}: {self.subjectName}"
     
+    def serialize(self):
+        return{
+            "subjectCode" : self.subjectCode,
+            "subjectName" : self.subjectName,
+            "facultyName" : self.facultyName,
+            "units" : self.units,
+            
+        }
 class Task(models.Model):
     task_Type = models.ForeignKey(TaskType,on_delete=CASCADE, related_name="TypeofTask",null=True)
     taskSubject = models.ForeignKey(Subject,on_delete=CASCADE,related_name="subjectTask")
@@ -71,6 +79,12 @@ class Task(models.Model):
     
     def __str__(self):
         return f"{self.title}"
+    
+    
+class Rubrick(models.Model):
+    subjectID = models.ForeignKey(Subject,on_delete=CASCADE, related_name='subjectRubicks')
+    taskTypeID = models.ForeignKey(TaskType,on_delete=CASCADE,related_name='takstypeRubicks')
+    percentage = models.IntegerField()
     
 
     
